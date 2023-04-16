@@ -5,10 +5,11 @@ from extractors.gameJob import extract_gameJobs_jobs
 keyword = input("What do you want to search for?")
 
 indeed = extract_indeed_jobs(keyword)
-wwr = extract_wwr_jobs(keyword)
-gameJob = extract_gameJobs_jobs(keyword)
+# wwr = extract_wwr_jobs(keyword)
+# gameJob = extract_gameJobs_jobs(keyword)
 
-jobs = indeed + wwr + gameJob
+# jobs = indeed + wwr + gameJob
+jobs = indeed
 
 file = open(f"{keyword}.csv", "w", encoding="utf-8-sig")
 
@@ -19,5 +20,5 @@ for job in jobs:
     f"{job['position']},{job['company']},{job['location']},{job['link']}\n")
 file.close()
 
-jobs = extract_gameJobs_jobs(keyword)
-print(jobs)
+# jobs = extract_gameJobs_jobs(keyword)
+# print(jobs)

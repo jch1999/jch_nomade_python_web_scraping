@@ -9,14 +9,14 @@ options.add_argument("--disable-dev-shm-usage")
 browser = webdriver.Chrome(options=options)
 
 
-def get_page_count(keyword):
+def get_page_count(keyword, index=0):
   options = Options()
   options.add_argument("--no-sandbox")
   options.add_argument("--disable-dev-shm-usage")
 
   browser = webdriver.Chrome(options=options)
 
-  browser.get(f"https://kr.indeed.com/jobs?q={keyword}")
+  browser.get(f"https://kr.indeed.com/jobs?q={keyword}&start={index*10}")
   soup = BeautifulSoup(browser.page_source, "html.parser")
   pagination = soup.find('nav', class_='ecydgvn0')
   # if pagination ==None:
@@ -26,8 +26,20 @@ def get_page_count(keyword):
   count = len(pages)
   if count == 0:
     return 1
-  elif count >= 5:
+  elif count <= 5:
     return 5
+  elif count > 5:
+    if index != 0:
+      return 5
+    return_page = 5
+    index = 2
+    while get_page_count(keyword, index) != 4:
+      if index == 9:
+        print(f"{keyword} research more than 10 pages!")
+        return 10
+      index = index + 1
+      return_page = return_page + 1
+    return return_page
   else:
     return count
 
