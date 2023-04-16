@@ -40,7 +40,6 @@ def extract_gameJobs_jobs(keyword):
   company_info = soup.find_all('div', class_='tit')
   for i in range(len(company_name)):
     company = company_name[i].find('strong').string.replace(",", " ")
-    print(company)
     link = company_info[i].find('a')['href']
     position = company_info[i].find('a').find('strong').string.replace(
       ",", " ")
