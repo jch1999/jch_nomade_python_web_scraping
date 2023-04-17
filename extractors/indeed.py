@@ -67,10 +67,15 @@ def extract_indeed_jobs(keyword):
         link = anchor['href']
         company = job.find('span', class_="companyName")
         location = job.find('div', class_='companyLocation')
+        #오늘 다시 실행해보니 잘 가져오던 location 정보를 가져오지 못하기 시작했다. start=90일때 주로 발생, 80일 때 한번 발생...
+        #렘이나 cpu를 너무 많이 쓰나? 아니면 제한시간을 초과했나?
+        #찾는데 2시간 걸렸나? 한놈이 ""로 감싸져있는데 이건가?
+        #확인해보니 얘가 문제 맞는데...왜 어젠 됬던거지? 내가 제대로 확인을 안 했던건가?일단 못 가져오면 None으로 처리해야 겠네..
+
         job_data = {
           "link": f"https://kr.indeed.com{link}",
           "company": company.string.replace(",", " "),
-          "location": location.string.replace(",", " "),
+          "location": location.string,
           "position": title.replace(",", " ")
         }
         results.append(job_data)
